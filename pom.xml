@@ -27,6 +27,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+	<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+ </dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jasper -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
@@ -55,7 +61,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
@@ -67,7 +72,6 @@
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
