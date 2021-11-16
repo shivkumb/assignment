@@ -55,7 +55,8 @@ public class UserServiceImpl implements UserService {
 
 		User userByUsername = userRepo.findByUsername(user.getUsername());
 		User userByPassword = userRepo.findByPassword(user.getPassword());
-		if (userByUsername != null || userByPassword != null) {
+		User userById = userRepo.findById(user.getUserId()).orElse(null);
+		if (userByUsername != null || userByPassword != null && userById == null ) {
 			throw new DataNotSavedException();
 		} else {
 			User savedUser = userRepo.save(user);
@@ -84,7 +85,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User updateUser(User user) throws DataNotSavedException {
 
-		return userRepo.save(user);
+		return saveUser(user);
 	}
 
 }

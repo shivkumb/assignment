@@ -111,7 +111,9 @@ public class UserController {
 		if (result.hasErrors()) {
 			throw new InvalidInputInRequest();
 		}
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User updatedUser = userService.updateUser(user);
+		
 		return ResponseEntity.of(Optional.of(updatedUser));
 	}
 	
