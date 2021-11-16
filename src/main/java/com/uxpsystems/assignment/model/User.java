@@ -1,5 +1,7 @@
 package com.uxpsystems.assignment.model;
 import java.util.Date;
+
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Length;
 
 import lombok.Data;
@@ -26,6 +30,8 @@ import lombok.Data;
 
 @Entity(name = "user_details")
 @Data
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cacheable
 public class User {
 
 	@Id
