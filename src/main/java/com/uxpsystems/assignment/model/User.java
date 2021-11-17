@@ -23,7 +23,7 @@ import lombok.Data;
  * User entity class with variables userID , username, password, Active status and TimeStamp.
  * UserID - Primary key ,will be incremented by 1 starting 1. 
  * username - Not blank,not nullable, length min = 6,max = 15 , Unique 
- *	password - Not blank,not nullable, length min = 8, Unique , 
+ *	password - Not blank,not nullable, length min = 8, 
  *	at least 1 (capital letter, small letter, number, special character)
  *  
  */
@@ -44,7 +44,7 @@ public class User {
 	@Length(min = 6,max = 15)
 	private String username;
 	
-	@Column(name = "password",nullable = false,unique = true)
+	@Column(name = "password",nullable = false)
 	@NotBlank
 	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
 	private String password;

@@ -4,7 +4,7 @@ package com.uxpsystems.assignment.exceptions;
  * @author shivkumb
  * InvalidInputInRequest Exception will thrown when BindingResult will fail from input request.
  */
-public class InvalidInputInRequest extends Exception {
+public class InvalidInputInRequest extends RuntimeException {
 
 	/**
 	 * 

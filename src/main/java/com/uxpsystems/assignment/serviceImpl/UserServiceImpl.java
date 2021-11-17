@@ -1,12 +1,17 @@
 package com.uxpsystems.assignment.serviceImpl;
+
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.uxpsystems.assignment.dao.UserRepo;
 import com.uxpsystems.assignment.exceptions.DataNotSavedException;
+import com.uxpsystems.assignment.exceptions.UserDataNotFoundException;
 import com.uxpsystems.assignment.model.User;
 import com.uxpsystems.assignment.service.UserService;
 
@@ -51,16 +56,15 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	@Transactional(rollbackFor = DataNotSavedException.class)
-	public User saveUser(User user) throws DataNotSavedException {
+	public User saveUser(User user) {
 
 		User userByUsername = userRepo.findByUsername(user.getUsername());
-		User userByPassword = userRepo.findByPassword(user.getPassword());
 		User userById = userRepo.findById(user.getUserId()).orElse(null);
-		if (userByUsername != null || userByPassword != null && userById == null ) {
-			throw new DataNotSavedException();
-		} else {
+		if (userByUsername == null && userById == null) {
 			User savedUser = userRepo.save(user);
 			return savedUser;
+		} else {
+			throw new DataNotSavedException();
 		}
 
 	}
@@ -85,7 +89,25 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User updateUser(User user) throws DataNotSavedException {
 
-		return saveUser(user);
+		User userByUsername = userRepo.findByUsername(user.getUsername());
+		User userById = userRepo.findById(user.getUserId()).orElse(null);
+		User updatedUser = user;
+
+		if (userById != null) {
+			if (userByUsername != null) {
+				if (userByUsername.getUserId() == user.getUserId()) {
+					updatedUser = userRepo.save(user);
+				} else {
+					throw new DataNotSavedException();
+				}
+			}else {
+				updatedUser = userRepo.save(user);
+			}
+		} else {
+			throw new UserDataNotFoundException();
+		}
+
+		return updatedUser;
 	}
 
 }
